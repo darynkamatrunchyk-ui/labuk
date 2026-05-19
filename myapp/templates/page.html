@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+<body>
+
+    <h1>{{ heading }}</h1>
+    <div class="content">
+        <p>{{ text }}</p>
+    </div>
+
+    <hr>
+
+    {# Якщо це головна сторінка — виводимо посилання на інші сторінки #}
+    {% if is_main %}
+        <h3>Перейти на інші сторінки:</h3>
+        <ul>
+            <li><a href="/about/">Сторінка "Про нас"</a></li>
+            <li><a href="/contacts/">Сторінка "Контакти"</a></li>
+        </ul>
+    {# Якщо це будь-яка інша сторінка — виводимо посилання на головну #}
+    {% else %}
+        <p><a href="/">← Повернутися на головну сторінку</a></p>
+    {% endif %}
+
+</body>
+</html>
