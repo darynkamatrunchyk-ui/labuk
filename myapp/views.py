@@ -5,7 +5,7 @@ def main_view(request):
         'title': 'Головна',
         'heading': 'Ласкаво просимо на головну сторінку!',
         'text': 'Це контент головної сторінки, згенерований через контекст.',
-        'is_main': True  # Прапорець, що це головна сторінка
+        'is_main': True
     }
     return render(request, 'page.html', context)
 
@@ -22,7 +22,7 @@ def contacts_view(request):
     context = {
         'title': 'Контакти',
         'heading': 'Наші контакти',
-        'text': 'Зв'язатися з нами можна через робочий email або Telegram.',
+        'text': "Зв'язатися з нами можна через робочий email або Telegram.",
         'is_main': False
     }
     return render(request, 'page.html', context)
