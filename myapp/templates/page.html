@@ -3,27 +3,229 @@
 <head>
     <meta charset="UTF-8">
     <title>{{ title }}</title>
+    <style>
+        /* Базові стилі для гарного вигляду сайту */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fdfbf7;
+            color: #4a3f35;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* ХЕДЕР (Верхня панель) */
+        header {
+            background-color: #ffffff;
+            border-bottom: 1px solid #eedfd2;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
+            color: #d4a373;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+        .main-nav a {
+            margin-left: 25px;
+            text-decoration: none;
+            color: #6b5b52;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        .main-nav a:hover {
+            color: #d4a373;
+        }
+
+        /* МЕНЮ КАТЕГОРІЙ */
+        .category-bar {
+            background-color: #f4eade;
+            padding: 12px 40px;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .category-link {
+            text-decoration: none;
+            color: #6b5b52;
+            font-size: 15px;
+            font-weight: 500;
+            padding: 6px 14px;
+            border-radius: 20px;
+            background-color: #ffffff;
+            border: 1px solid #eedfd2;
+            transition: all 0.3s;
+        }
+        .category-link:hover {
+            background-color: #d4a373;
+            color: #ffffff;
+            border-color: #d4a373;
+        }
+
+        /* ОСНОВНИЙ КОНТЕНТ */
+        main {
+            padding: 40px;
+            flex: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        h1 {
+            color: #4a3f35;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        .page-text {
+            color: #7a6b5e;
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+
+        /* СІТКА ТОВАРІВ З БАЗИ ДАНИХ */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+        .product-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(107, 91, 82, 0.05);
+            border: 1px solid #eedfd2;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        .product-card h3 {
+            margin: 0 0 10px 0;
+            color: #4a3f35;
+            font-size: 20px;
+        }
+        .product-price {
+            font-weight: bold;
+            color: #d4a373;
+            font-size: 22px;
+            margin-bottom: 12px;
+        }
+        .product-description {
+            font-size: 14px;
+            color: #7a6b5e;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* КНОПКА ПОВЕРНЕННЯ */
+        .btn-back {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #d4a373;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .btn-back:hover {
+            background-color: #bfa280;
+        }
+
+        /* ФУТЕР (Підвал сайту) */
+        footer {
+            background-color: #4a3f35;
+            color: #fdfbf7;
+            padding: 35px 40px;
+            text-align: center;
+            margin-top: auto;
+            border-top: 4px solid #d4a373;
+        }
+        .footer-nav {
+            margin-top: 15px;
+        }
+        .footer-nav a {
+            color: #eedfd2;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        .footer-nav a:hover {
+            color: #ffffff;
+        }
+        .footer-credits {
+            font-size: 12px;
+            color: #bfa280;
+            margin-top: 15px;
+        }
+    </style>
 </head>
 <body>
 
-    <h1>{{ heading }}</h1>
-    <div class="content">
-        <p>{{ text }}</p>
+    <header>
+        <a href="/" class="logo">Sweet Symphony</a>
+        <nav class="main-nav">
+            <a href="/">Головна</a>
+            <a href="/about/">Про нас</a>
+            <a href="/contacts/">Контакти</a>
+        </nav>
+    </header>
+
+    <div class="category-bar">
+        <a href="/" class="category-link">Всі солодощі</a>
+        {% for cat in categories %}
+            <a href="/?category={{ cat.id }}" class="category-link">{{ cat.name }}</a>
+        {% endfor %}
     </div>
 
-    <hr>
+    <main>
+        <h1>{{ heading }}</h1>
+        <p class="page-text">{{ text }}</p>
 
-    {# Якщо це головна сторінка — виводимо посилання на інші сторінки #}
-    {% if is_main %}
-        <h3>Перейти на інші сторінки:</h3>
-        <ul>
-            <li><a href="/about/">Сторінка "Про нас"</a></li>
-            <li><a href="/contacts/">Сторінка "Контакти"</a></li>
-        </ul>
-    {# Якщо це будь-яка інша сторінка — виводимо посилання на головну #}
-    {% else %}
-        <p><a href="/">← Повернутися на головну сторінку</a></p>
-    {% endif %}
+        {% if is_main %}
+            <div class="products-grid">
+                {% for product in products %}
+                    <div class="product-card">
+                        <h3>{{ product.name }}</h3>
+                        <div class="product-price">{{ product.price }} грн</div>
+                        <p class="product-description">
+                            {% if product.description %}
+                                {{ product.description }}
+                            {% else %}
+                                Свіжа та вишукана солодощ, створена кондитерами Sweet Symphony.
+                            {% endif %}
+                        </p>
+                    </div>
+                {% empty %}
+                    <p>У цій категорії солодощів поки немає. Ми скоро їх додамо!</p>
+                {% endfor %}
+            </div>
+        {% else %}
+            <a href="/" class="btn-back">← На головну сторінку</a>
+        {% endif %}
+    </main>
+
+    <footer>
+        <div>&copy; 2026 Sweet Symphony. Всі права захищені.</div>
+        <div class="footer-nav">
+            <a href="/">Головна</a>
+            <a href="/about/">Про нас</a>
+            <a href="/contacts/">Контакти</a>
+        </div>
+        <div class="footer-credits">Зроблено з любов'ю для найкращих моментів вашого життя.</div>
+    </footer>
 
 </body>
 </html>
